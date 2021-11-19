@@ -143,3 +143,44 @@ function groupBy(objects, property) {
     }
     return result;
 }
+
+/*function fetchRhymes() {
+    const userRhyme = document.getElementById('word_input').value;
+    document.getElementById("output_description").innerHTML = `Words that rhyme with ${userRhyme}`;
+    //document.getElementById('word_output').innerHTML =
+    console.log(userRhyme);
+    const promise = fetch('https://api.datamuse.com/words?rel_rhy=' + userRhyme);
+    promise.then((response) => {
+        console.log("response:", response)
+        return response.text();
+    })
+        .then((data) => { console.log(data); })
+}*/
+
+/*function fetchSynonyms() {
+    var userSyn = document.getElementById('word_input').value;
+    console.log(userSyn);
+    document.getElementById("output_description").innerHTML = `Words with a similar meaning to ${userSyn}`;
+    //document.getElementById('word_output').innerHTML =
+    fetch('https://api.datamuse.com/words?rel_syn=' + userSyn)
+        .then(function (response) {
+            console.log("Response:", response)
+            return response.json();
+        })
+        .then(function (data) { console.log(data); })
+        .then(function (data) {
+            appendData(data);
+        })
+        .catch(function (err) {
+            console.log('error: ' + err);
+        });
+}
+
+function appendData(data) {
+    var container = document.getElementById('word_output');
+    for (var i = 0; i < data.length; i++) {
+        var div = document.createElement("div");
+        div.innerHTML = data[i].word;
+        container.appendChild(div);
+    }
+}*/
