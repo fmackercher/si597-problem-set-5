@@ -17,7 +17,7 @@ async function fetchRhymes() {
 
     var container = document.getElementById('word_output');
     const groupedList = groupBy(wordList, 'numSyllables');
-    console.log(groupedList);
+    console.log(groupedList); //array of another array
     const resultList = Object.values(groupedList);
     console.log(resultList);
     if (resultList.length == 0) {
@@ -25,41 +25,29 @@ async function fetchRhymes() {
         div.innerHTML = "(no results)";
         container.appendChild(div);
     } else {
-        /*for (let i = 0; i < resultList.length; i++) {
-            const divEl = document.createElement("span");
-            //add syllable num here i+1 for int + for syll
-            for (j = 0; j < resultList[i].length; j++) {
+        for (const key in groupedList) { //resultListforEach[result]
+            const uList = document.createElement("ul");
+            const h2 = document.createElement("h2");
+            h2.textContent = `${key}` + " syllable words";
+            container.append(h2, uList);
+            const result = groupedList[key];
+            for (i = 0; i < result.length; i++) { //i < result.length; i++
                 const list = document.createElement("li");
                 list.setAttribute('id', 'li_item');
                 const button = document.createElement('button');
-                const text1 = resultList[i][j].word;
+                const text1 = result[i].word;
+                console.log(text1);
                 const listItem = document.createTextNode(text1);
                 list.append(listItem, ' ');
                 button.setAttribute('id', `save_word_${i}`);
-                button.classList.add('btn', 'btn-outline-success');
+                button.classList.add('btn', 'btn-outline-success', 'btn-sm');
                 button.innerHTML = "Save";
                 list.appendChild(button);
-                container.appendChild(list);
-                document.getElementById(`save_word_${i}`).addEventListener('click', function () {
-                    document.getElementById('saved_words').append(text1, ', ');
+                uList.appendChild(list);
+                button.addEventListener('click', function () {
+                    document.getElementById('saved_words').append(text1, ', '); //should be on top loop
                 });
             }
-        }*/
-        for (let i = 0; i < resultList[0].length + resultList[1].length + resultList[2].length; i++) {
-            const list = document.createElement("li");
-            list.setAttribute('id', 'li_item');
-            const button = document.createElement('button');
-            const text1 = resultList[0][i].word;
-            const listItem = document.createTextNode(text1);
-            list.append(listItem, ' ');
-            button.setAttribute('id', `save_word_${i}`);
-            button.classList.add('btn', 'btn-outline-success');
-            button.innerHTML = "Save";
-            list.appendChild(button);
-            container.appendChild(list);
-            document.getElementById(`save_word_${i}`).addEventListener('click', function () {
-                document.getElementById('saved_words').append(text1, ', ');
-            });
         }
     }
 }
@@ -89,7 +77,7 @@ async function fetchSynonyms() {
             const listItem = document.createTextNode(text);
             list.append(listItem, ' ');
             button.setAttribute('id', `save_word_${i}`);
-            button.classList.add('btn', 'btn-outline-success');
+            button.classList.add('btn', 'btn-outline-success', 'btn-sm');
             button.innerHTML = "Save";
             list.appendChild(button);
             container.appendChild(list);
@@ -100,23 +88,6 @@ async function fetchSynonyms() {
     }
 
 }
-
-/*for (var i = 0; i < wordList.length; i++) {
-    (function () {
-        var list = document.createElement("li");
-        var button = document.createElement('button');
-        var text = wordList[i].word;
-        var listItem = document.createTextNode(text);
-        list.appendChild(listItem);
-        button.setAttribute('id', `save_word_${i}`);
-        button.innerHTML = "Save";
-        list.appendChild(button);
-        container.appendChild(list);
-        document.getElementById(`save_word_${i}`).addEventListener('click', function () { makeItHappen(listItem); }, false);
-    }());
-}*/
-
-
 
 function groupBy(objects, property) {
     // If property is not a function, convert it to a function that accepts one argument (an object) and returns that object's
@@ -143,44 +114,3 @@ function groupBy(objects, property) {
     }
     return result;
 }
-
-/*function fetchRhymes() {
-    const userRhyme = document.getElementById('word_input').value;
-    document.getElementById("output_description").innerHTML = `Words that rhyme with ${userRhyme}`;
-    //document.getElementById('word_output').innerHTML =
-    console.log(userRhyme);
-    const promise = fetch('https://api.datamuse.com/words?rel_rhy=' + userRhyme);
-    promise.then((response) => {
-        console.log("response:", response)
-        return response.text();
-    })
-        .then((data) => { console.log(data); })
-}*/
-
-/*function fetchSynonyms() {
-    var userSyn = document.getElementById('word_input').value;
-    console.log(userSyn);
-    document.getElementById("output_description").innerHTML = `Words with a similar meaning to ${userSyn}`;
-    //document.getElementById('word_output').innerHTML =
-    fetch('https://api.datamuse.com/words?rel_syn=' + userSyn)
-        .then(function (response) {
-            console.log("Response:", response)
-            return response.json();
-        })
-        .then(function (data) { console.log(data); })
-        .then(function (data) {
-            appendData(data);
-        })
-        .catch(function (err) {
-            console.log('error: ' + err);
-        });
-}
-
-function appendData(data) {
-    var container = document.getElementById('word_output');
-    for (var i = 0; i < data.length; i++) {
-        var div = document.createElement("div");
-        div.innerHTML = data[i].word;
-        container.appendChild(div);
-    }
-}*/
